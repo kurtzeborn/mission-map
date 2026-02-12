@@ -1,0 +1,14 @@
+{
+  "name": "mission-map-tools",
+  "version": "1.0.0",
+  "description": "Mission Map data update and management tools",
+  "type": "module",
+  "scripts": {
+    "update": "node update-missions.js",
+    "scrape": "node scrape-missions.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "node-fetch": "^3.3.0"
+  }
+}
