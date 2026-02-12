@@ -133,6 +133,7 @@ resource functionApp 'Microsoft.Web/sites@2023-01-01' = {
       cors: {
         allowedOrigins: [
           'https://${staticWebAppName}.azurestaticapps.net'
+          'https://mission.k61.dev'
           'http://localhost:5173'
         ]
       }
@@ -154,20 +155,13 @@ resource staticWebApp 'Microsoft.Web/staticSites@2023-01-01' = {
   }
 }
 
-// Link Static Web App to Function App backend
-resource staticWebAppBackend 'Microsoft.Web/staticSites/linkedBackends@2023-01-01' = {
-  parent: staticWebApp
-  name: 'backend'
-  properties: {
-    backendResourceId: functionApp.id
-    region: location
-  }
-}
-
 // Outputs
 output storageAccountName string = storageAccount.name
 output functionAppName string = functionApp.name
 output functionAppHostname string = functionApp.properties.defaultHostName
+output functionAppUrl string = 'https://${functionApp.properties.defaultHostName}'
 output staticWebAppName string = staticWebApp.name
 output staticWebAppHostname string = staticWebApp.properties.defaultHostname
-output staticWebAppDeploymentToken string = staticWebApp.listSecrets().properties.apiKey
+
+// Note: Get deployment token manually via Azure Portal or CLI:
+// az staticwebapp secrets list --name <staticWebAppName> --resource-group <rgName>

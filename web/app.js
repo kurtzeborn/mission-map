@@ -1,5 +1,7 @@
 // Mission Map Application
-const API_BASE = '/api';
+const API_BASE = window.location.hostname === 'localhost' 
+    ? '/api' 
+    : 'https://missionmap-func-prod.azurewebsites.net/api';
 
 // Initialize map
 const map = L.map('map').setView([20, 0], 2);
