@@ -15,6 +15,9 @@ local.settings.json
 .env.local
 .env.*.local
 
+# Secrets
+infra/deployment-token.txt
+
 # IDE
 .vscode/
 .idea/

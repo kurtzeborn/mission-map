@@ -172,3 +172,42 @@ footer {
         padding: 0.5rem 1rem;
     }
 }
+
+/* Marker cluster customization */
+.marker-cluster-small {
+    background-color: rgba(74, 144, 217, 0.6);
+}
+.marker-cluster-small div {
+    background-color: rgba(74, 144, 217, 0.8);
+}
+
+.marker-cluster-medium {
+    background-color: rgba(30, 58, 95, 0.6);
+}
+.marker-cluster-medium div {
+    background-color: rgba(30, 58, 95, 0.8);
+}
+
+.marker-cluster-large {
+    background-color: rgba(30, 58, 95, 0.7);
+}
+.marker-cluster-large div {
+    background-color: rgba(30, 58, 95, 0.9);
+}
+
+.marker-cluster {
+    background-clip: padding-box;
+    border-radius: 20px;
+}
+.marker-cluster div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 15px;
+    font: 12px 'Segoe UI', sans-serif;
+    color: white;
+    font-weight: 600;
+    line-height: 30px;
+}

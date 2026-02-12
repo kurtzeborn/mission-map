@@ -1,7 +1,11 @@
 // Mission Map Application
-const API_BASE = window.location.hostname === 'localhost' 
-    ? '/api' 
-    : 'https://missionmap-func-prod.azurewebsites.net/api';
+
+// Configuration - in production, API_BASE points to Azure Functions
+const CONFIG = {
+    API_BASE: window.location.hostname === 'localhost' 
+        ? 'http://localhost:7071/api' 
+        : 'https://missionmap-func-prod.azurewebsites.net/api'
+};
 
 // Initialize map
 const map = L.map('map').setView([20, 0], 2);
@@ -20,13 +24,23 @@ const missionIcon = L.divIcon({
     popupAnchor: [0, -8]
 });
 
+// Marker cluster group
+const markerCluster = L.markerClusterGroup({
+    maxClusterRadius: 50,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true,
+    disableClusteringAtZoom: 8
+});
+map.addLayer(markerCluster);
+
 // Store all markers for filtering
 let missionMarkers = [];
 
 // Load missions from API
 async function loadMissions() {
     try {
-        const response = await fetch(`${API_BASE}/missions`);
+        const response = await fetch(`${CONFIG.API_BASE}/missions`);
         if (!response.ok) throw new Error('Failed to load missions');
         
         const data = await response.json();
@@ -42,7 +56,7 @@ async function loadMissions() {
 // Display missions on map
 function displayMissions(missions) {
     // Clear existing markers
-    missionMarkers.forEach(marker => map.removeLayer(marker));
+    markerCluster.clearLayers();
     missionMarkers = [];
 
     missions.forEach(mission => {
@@ -61,7 +75,7 @@ function displayMissions(missions) {
             // Click handler for sidebar
             marker.on('click', () => showMissionDetails(mission));
 
-            marker.addTo(map);
+            markerCluster.addLayer(marker);
             missionMarkers.push(marker);
         }
     });
